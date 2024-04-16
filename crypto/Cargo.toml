@@ -1,0 +1,13 @@
+[package]
+name = "crypto"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+
+
+[features]
+performance = []
+
+[dependencies]
+# TODO: Hide serde behind a flag
+serde = { version = "1.0.193", features = ["derive"] }

@@ -1,5 +1,5 @@
 [workspace]
-members = [ "crypto", "web" ]
+members = [ "web", "client" ]
 
 [workspace.package]
 version = "1.2.3"

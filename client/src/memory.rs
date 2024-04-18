@@ -11,6 +11,12 @@ pub struct InMemoryClient {
     mmr: RwLock<Mmr>,
 }
 
+impl Default for InMemoryClient {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl InMemoryClient {
     pub fn new() -> Self {
         InMemoryClient {

@@ -1,10 +1,10 @@
-use anyhow;
+
 use async_trait::async_trait;
 use miden_crypto::{
     hash::rpo::RpoDigest,
     merkle::{MmrPeaks, MmrProof},
 };
-use reqwest;
+
 
 pub struct HttpClient {
     client: reqwest::Client,

@@ -1,4 +1,4 @@
-use anyhow;
+
 use miden_crypto::{
     hash::rpo::{Rpo256, RpoDigest},
     merkle::{MmrPeaks, MmrProof},

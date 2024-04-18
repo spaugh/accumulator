@@ -5,9 +5,9 @@ use axum::{
     http::{self, Request, StatusCode},
 };
 use http_body_util::BodyExt;
-use miden_crypto::hash::rpo::{Rpo256, RpoDigest};
+use miden_crypto::hash::rpo::{RpoDigest};
 use miden_crypto::merkle::{MmrPeaks, MmrProof};
-use serde_json;
+
 use tower::ServiceExt;
 
 use client::Client;

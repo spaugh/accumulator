@@ -10,7 +10,7 @@ More specifically, the API provides a simple interface for managing leaves and r
 
 ## Getting started
 
-There is a simple bash script that simulates the interaction between the parties. It is run simply as:
+There is a simple bash script that simulates the interaction between the parties. To run it:
 
 ```
 ./run.sh

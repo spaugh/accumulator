@@ -8,6 +8,14 @@ There are two components to this project - a REST API and a CLI. One can imagine
 
 More specifically, the API provides a simple interface for managing leaves and retrieving Merkle Mountain Range (MMR) proofs and peaks based on block IDs. The term "block" is used a bit loosely, as there is a new block for every leaf added (there is no more quantization) - it's just a convenient term for describing the state of the accumulator.
 
+## Getting started
+
+There is a simple bash script that simulates the interaction between the parties. It is run simply as:
+
+```
+./run.sh
+```
+
 ## Routes
 
 ### `POST /leaves`
@@ -18,3 +26,4 @@ Retrieves the peaks for the specified block ID.
 
 ### `GET /blocks/:id/proofs/:index`
 Retrieves the proof for a leaf at the specified index within the given block ID.
+

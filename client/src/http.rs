@@ -27,7 +27,7 @@ impl crate::Client for HttpClient {
         let response = self
             .client
             .post(uri)
-            .json(&leaf)
+            .body(leaf.to_string())
             .send()
             .await?
             .error_for_status()?

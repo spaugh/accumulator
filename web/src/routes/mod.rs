@@ -4,7 +4,6 @@ use axum::routing::get;
 use axum::{response::Json, routing::post, Router};
 
 use crate::state::AppState;
-use miden_crypto::hash::rpo::RpoDigest;
 
 async fn add_leaf(State(state): State<AppState>, body: String) -> impl IntoResponse {
     let mut mmr = state.mmr.lock().unwrap();
@@ -28,12 +27,9 @@ async fn get_proof(
     Json(proof)
 }
 
-fn app() -> Router {
+pub fn make_router() -> Router {
     /*
-    I'm being pretty loose with the term "block" here. I mostly just needed another term for the state of the mmr at the time
-    that's a bit more intuitive than "forest". That said, if this were to turn into a production service, you probably would want
-    the concept of a block, so that you can more easily update old proofs. There are a number of clever techniques to doing this
-    sort of batching but, for now, we just have a new "block" for every leaf.
+    I'm being pretty loose with the term "block" here. I mostly just needed another term for the state of the mmr at the time that's a bit more intuitive than "forest". That said, if this were to turn into a production service, you probably would want the concept of a block to have some coarser grain granularity, so that you can more easily update old proofs. There are a number of clever techniques to doing this sort of batching but, for now, we just have a new "block" for every leaf.
      */
     Router::new()
         .route("/leaves", post(add_leaf))
@@ -52,14 +48,14 @@ mod tests {
 
     #[tokio::test]
     async fn test_leaves() {
-        let client = TestClient::new(app());
+        let client = TestClient::new(make_router());
         assert_eq!(client.add_data("hello").await.unwrap(), 0);
         assert_eq!(client.add_data("goodbye").await.unwrap(), 1);
     }
 
     #[tokio::test]
     async fn test_peaks() {
-        let client = TestClient::new(app());
+        let client = TestClient::new(make_router());
         let block = client.add_data("a").await.unwrap() + 1;
 
         let peaks = client.get_peaks(block).await.unwrap();
@@ -69,7 +65,7 @@ mod tests {
 
     #[tokio::test]
     async fn test_proofs() {
-        let client = TestClient::new(app());
+        let client = TestClient::new(make_router());
         let leaf = client.add_data("1").await.unwrap();
         let block = leaf + 1;
         let peaks = client.get_peaks(block).await.unwrap();

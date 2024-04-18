@@ -20,11 +20,6 @@ impl TestClient {
     pub fn new(router: axum::Router) -> Self {
         Self { router }
     }
-
-    pub async fn add_data(&self, data: &str) -> anyhow::Result<usize> {
-        let digest = Rpo256::hash(data.as_bytes());
-        self.add_leaf(digest).await
-    }
 }
 
 #[async_trait]

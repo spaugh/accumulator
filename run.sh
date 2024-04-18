@@ -20,17 +20,17 @@ PID=$!
 
 
 function add {
-    printf '%s' "Trying to add $1 to MMR......."
+    printf '%s' "Trying to add $1 to accumulator......."
     ./cli --uri $URI add $1 &>/dev/null && echo "${GREEN}Success${DEFAULT}" || echo "${RED}Failure${DEFAULT}" 
 }
 
 function verify {
-    printf '%s' "Checking that $1 is valid....."
+    printf '%s' "Checking that $1 is at index $2........"
     ./cli --uri $URI verify $1 $2 &>/dev/null && echo "${GREEN}Success${DEFAULT}" || echo "${RED}Failure${DEFAULT}" 
 }
 
 function verify_false {
-    printf '%s' "Checking that $1 is invalid..."
+    printf '%s' "Checking that $1 is not at index $2...."
     ! ./cli --uri $URI verify $1 $2 &>/dev/null && echo "${GREEN}Success${DEFAULT}" || echo "${RED}Failure${DEFAULT}" 
 }
 

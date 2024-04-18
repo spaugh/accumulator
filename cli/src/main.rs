@@ -21,7 +21,7 @@ enum Action {
     Verify {
         data: String,
         index: usize,
-    }
+    },
 }
 
 #[tokio::main]
@@ -34,7 +34,7 @@ async fn main() -> std::process::ExitCode {
     };
 
     match command.action {
-        Action::Add { data , verify } => {
+        Action::Add { data, verify } => {
             let index = client.add_data(&data).await.unwrap();
             println!("Added leaf at index: {}", index);
             if verify {
@@ -43,15 +43,13 @@ async fn main() -> std::process::ExitCode {
                 println!("Verified!");
             }
         }
-        Action::Verify { data, index } => {
-            match client.verify(&data, index).await.unwrap() {
-                true => println!("Verified!"),
-                false => {
-                    println!("Not verified!");
-                    return std::process::ExitCode::FAILURE;
-                }
+        Action::Verify { data, index } => match client.verify(&data, index).await.unwrap() {
+            true => println!("Verified!"),
+            false => {
+                println!("Not verified!");
+                return std::process::ExitCode::FAILURE;
             }
-        }
+        },
     }
 
     return std::process::ExitCode::SUCCESS;

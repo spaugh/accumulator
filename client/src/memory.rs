@@ -8,13 +8,13 @@ use miden_crypto::{
 };
 
 pub struct InMemoryClient {
-    mmr: RwLock<Mmr>, 
+    mmr: RwLock<Mmr>,
 }
 
 impl InMemoryClient {
     pub fn new() -> Self {
         InMemoryClient {
-            mmr: RwLock::new(Mmr::new()) 
+            mmr: RwLock::new(Mmr::new()),
         }
     }
 }
@@ -28,10 +28,18 @@ impl crate::Client for InMemoryClient {
     }
 
     async fn get_peaks(&self, block_id: usize) -> anyhow::Result<MmrPeaks> {
-        self.mmr.read().unwrap().peaks(block_id).with_context(|| "Failed to get peaks")
+        self.mmr
+            .read()
+            .unwrap()
+            .peaks(block_id)
+            .with_context(|| "Failed to get peaks")
     }
 
     async fn get_proof(&self, block_id: usize, index: usize) -> anyhow::Result<MmrProof> {
-        self.mmr.read().unwrap().open(index, block_id).with_context(|| "Failed to get proof")
+        self.mmr
+            .read()
+            .unwrap()
+            .open(index, block_id)
+            .with_context(|| "Failed to get proof")
     }
 }
